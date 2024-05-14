@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Windmill Dashboard</title>
+    <title>SiGaji BCP</title>
     @vite('template\assets\css\tailwind.output.css')
     @include('assets.style')
     @include('assets.script')
@@ -20,7 +20,7 @@
             <main class="h-full overflow-y-auto">
                 <div class="container px-6 mx-auto grid">
                     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                        Dashboard Admin
+                        Welcome {{ $user->name }} !
                     </h2>
                     <!-- Cards -->
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">

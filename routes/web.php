@@ -3,11 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Superadmin\SuperadminController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Superadmin\EmployeeController;
 use App\Http\Controllers\Superadmin\UserManagementController;
 use App\Http\Controllers\Superadmin\PayrollController;
+use App\Http\Controllers\superadmin\PayrollReportController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\EmployeeAdminController;
+use App\Http\Controllers\Admin\PayrollReportAdminController;
+use App\Http\Controllers\User\UserController;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -27,8 +30,20 @@ Route::prefix('user')->middleware(['auth', 'userMiddleware', 'preventBackAfterLo
 });
 
 // ADMIN ROUTES
-Route::middleware(['auth', 'adminMiddleware', 'preventBackAfterLogout'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')->middleware(['auth', 'adminMiddleware', 'preventBackAfterLogout'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::prefix('employee')->group(function () {
+        Route::get('', [EmployeeAdminController::class, 'employeeIndex'])->name('admin.employee');
+        Route::get('/view-employee/{id}', [EmployeeAdminController::class, 'viewEmployee'])->name('admin.viewEmployee');
+        Route::get('/export/employee', [EmployeeAdminController::class, 'exportEmployee'])->name('admin.exportEmployee');
+    });
+
+    Route::prefix('report-payroll')->group(function () {
+        Route::get('', [PayrollReportAdminController::class, 'payrollReportIndex'])->name('admin.payrollReport');
+        Route::get('/report-details/{id}', [PayrollReportAdminController::class, 'payrollReportDetailIndex'])->name('admin.payrollReportDetails');
+        Route::get('/export/payroll/{id}', [PayrollReportAdminController::class, 'exportPayroll'])->name('admin.exportPayroll');
+    });
 });
 
 // SUPERADMIN ROUTES
@@ -43,6 +58,7 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('/view-employee/{id}', [EmployeeController::class, 'viewEmployee'])->name('superadmin.viewEmployee');
         Route::get('/edit-employee/{id}', [EmployeeController::class, 'editEmployeeIndex'])->name('superadmin.editEmployee');
         Route::put('/edit-employee/{id}', [EmployeeController::class, 'editEmployee'])->name('superadmin.updateEmployee');
+        Route::get('/export/employee', [EmployeeController::class, 'exportEmployee'])->name('superadmin.exportEmployee');
     });
 
     Route::prefix('user-management')->group(function () {
@@ -55,5 +71,11 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('', [PayrollController::class, 'payrollIndex'])->name('superadmin.payroll');
         Route::post('/run-payroll', [PayrollController::class, 'runPayroll'])->name('superadmin.runPayroll');
         Route::get('/payroll-details/{id}', [PayrollController::class, 'payrollDetailIndex'])->name('superadmin.payrollDetails');
+    });
+
+    Route::prefix('report-payroll')->group(function () {
+        Route::get('', [PayrollReportController::class, 'payrollReportIndex'])->name('superadmin.payrollReport');
+        Route::get('/report-details/{id}', [PayrollReportController::class, 'payrollReportDetailIndex'])->name('superadmin.payrollReportDetails');
+        Route::get('/export/payroll/{id}', [PayrollReportController::class, 'exportPayroll'])->name('superadmin.exportPayroll');
     });
 });

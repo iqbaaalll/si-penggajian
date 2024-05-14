@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Superadmin;
 
+use App\Exports\EmployeesExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -128,5 +130,10 @@ class EmployeeController extends Controller
         $employee->update($validatedData);
 
         return redirect()->route('superadmin.viewEmployee', $id)->with('success', 'Employee updated successfully');
+    }
+
+    public function exportEmployee()
+    {
+        return Excel::download(new EmployeesExport, 'Daftar Karyawan BCP.xlsx');
     }
 }

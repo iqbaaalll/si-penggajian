@@ -51,7 +51,7 @@
                                             <td class="px-4 py-3 text-sm">
                                                 {{ \Carbon\Carbon::parse($period->payrollSchedule)->format('d F Y') }}
                                             </td>
-                                            <td class="px-3 py-3">
+                                            <td class="px-6 py-3">
                                                 <a href="{{ route('superadmin.payrollDetails', ['id' => $period->id]) }}"
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400"
                                                     aria-label="View">
@@ -117,12 +117,14 @@
 
                     <div class="inline-flex  mt-4">
                         <input type="checkbox" id="bonus" name="bonus" value="true">
-                        <label for="bonus" class="mr-2 px-2 text-sm text-gray-800 dark:text-gray-300">with Bonus</label>
+                        <label for="bonus" class="mr-2 px-2 text-sm text-gray-800 dark:text-gray-300">with
+                            Bonus</label>
                         <input type="checkbox" id="thr" name="thr" value="true">
                         <label for="thr" class="px-2 text-sm text-gray-800 dark:text-gray-300">with THR</label>
                     </div>
 
-                    <p class="text-sm text-gray-400">* make sure you have checked the bonus and THR data for each employee</p>
+                    <p class="text-sm text-gray-400">* make sure you have checked the bonus and THR data for each
+                        employee</p>
 
                     <footer
                         class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">

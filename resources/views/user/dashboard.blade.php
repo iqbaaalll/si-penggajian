@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Windmill Dashboard</title>
+    <title>SiGaji BCP</title>
     @vite('template\assets\css\tailwind.output.css')
     @include('assets.style')
     @include('assets.script')
@@ -562,4 +562,3 @@
 </body>
 
 </html>
-

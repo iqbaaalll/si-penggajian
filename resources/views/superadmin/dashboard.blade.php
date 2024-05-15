@@ -35,10 +35,10 @@
                             </div>
                             <div>
                                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Total clients
+                                    Total Employee
                                 </p>
                                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    6389
+                                    {{ $totalEmployee}}
                                 </p>
                             </div>
                         </div>
@@ -108,22 +108,22 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                             <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                                Revenue
+                                Expense
                             </h4>
                             <canvas id="pie"></canvas>
                             <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                                 <!-- Chart legend -->
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"></span>
-                                    <span>Shirts</span>
+                                    <span>Salary</span>
                                 </div>
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                                    <span>Shoes</span>
+                                    <span>Tax</span>
                                 </div>
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                                    <span>Bags</span>
+                                    <span>BPJS</span>
                                 </div>
                             </div>
                         </div>
@@ -136,11 +136,11 @@
                                 <!-- Chart legend -->
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                                    <span>Organic</span>
+                                    <span>Revenue</span>
                                 </div>
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                                    <span>Paid</span>
+                                    <span>Expense</span>
                                 </div>
                             </div>
                         </div>

@@ -23,7 +23,6 @@ class PayrollsExport implements FromCollection, WithHeadings, WithMapping
     }
     public function collection()
     {
-        // Mengambil data payroll dengan relasi employee dan payrollPeriod
         return Payroll::with(['employee', 'payrollPeriod'])
             ->whereHas('payrollPeriod', function ($query) {
                 $query->where('payrollMonth', $this->payrollMonth);
@@ -31,7 +30,6 @@ class PayrollsExport implements FromCollection, WithHeadings, WithMapping
             ->get();
     }
 
-    // Menambahkan header untuk kolom dalam file excel
     public function headings(): array
     {
         return [
@@ -50,7 +48,6 @@ class PayrollsExport implements FromCollection, WithHeadings, WithMapping
         ];
     }
 
-    // Memetakan data yang diambil ke dalam format yang sesuai untuk diekspor
     public function map($payroll): array
     {
         return [

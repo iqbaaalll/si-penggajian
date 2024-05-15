@@ -97,7 +97,7 @@
                     Setup payroll time by month and year and schedule details.
                 </p>
                 <!-- Modal form -->
-                <form method="POST" action="{{ route('superadmin.runPayroll') }}">
+                <form id="payrollForm" method="POST" action="{{ route('superadmin.runPayroll') }}">
                     @csrf
                     <label for="payrollMonth" class=" text-sm flex flex-col ">
                         <span class="text-gray-700 font-semibold dark:text-gray-400">Payroll Period</span>
@@ -127,7 +127,7 @@
                         employee</p>
 
                     <footer
-                        class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+                        class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-white dark:bg-gray-800">
                         <button @click="closeModal"
                             class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                             Cancel
@@ -141,6 +141,24 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('payrollForm');
+            var payrollMonth = document.getElementById('payrollMonth');
+            var payrollSchedule = document.getElementById('payrollSchedule');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                if (payrollMonth.value === '' || payrollSchedule.value === '') {
+                    alert('Please fill in all fields');
+                    return false;
+                }
+
+                this.submit();
+            });
+        });
+    </script>
 </body>
 
 </html>

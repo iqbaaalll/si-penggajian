@@ -43,6 +43,10 @@ Route::prefix('admin')->middleware(['auth', 'adminMiddleware', 'preventBackAfter
         Route::get('', [PayrollReportAdminController::class, 'payrollReportIndex'])->name('admin.payrollReport');
         Route::get('/report-details/{id}', [PayrollReportAdminController::class, 'payrollReportDetailIndex'])->name('admin.payrollReportDetails');
         Route::get('/export/payroll/{id}', [PayrollReportAdminController::class, 'exportPayroll'])->name('admin.exportPayroll');
+        Route::get('/report-details/other-report/{id}', [PayrollReportAdminController::class, 'otherReportIndex'])->name('admin.otherReport');
+        Route::get('/report-details/other-report/export/transfer/{id}', [PayrollReportAdminController::class, 'exportTransferlist'])->name('admin.exportTransferList');
+        Route::get('/report-details/other-report/export/tax/{id}', [PayrollReportAdminController::class, 'exportTaxReport'])->name('admin.exportTaxReport');
+        Route::get('/report-details/other-report/export/bpjs/{id}', [PayrollReportAdminController::class, 'exportBpjsReport'])->name('admin.exportBpjsReport');
     });
 });
 
@@ -77,5 +81,9 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('', [PayrollReportController::class, 'payrollReportIndex'])->name('superadmin.payrollReport');
         Route::get('/report-details/{id}', [PayrollReportController::class, 'payrollReportDetailIndex'])->name('superadmin.payrollReportDetails');
         Route::get('/export/payroll/{id}', [PayrollReportController::class, 'exportPayroll'])->name('superadmin.exportPayroll');
+        Route::get('/report-details/other-report/{id}', [PayrollReportController::class, 'otherReportIndex'])->name('superadmin.otherReport');
+        Route::get('/report-details/other-report/export/transfer/{id}', [PayrollReportController::class, 'exportTransferlist'])->name('superadmin.exportTransferList');
+        Route::get('/report-details/other-report/export/tax/{id}', [PayrollReportController::class, 'exportTaxReport'])->name('superadmin.exportTaxReport');
+        Route::get('/report-details/other-report/export/bpjs/{id}', [PayrollReportController::class, 'exportBpjsReport'])->name('superadmin.exportBpjsReport');
     });
 });

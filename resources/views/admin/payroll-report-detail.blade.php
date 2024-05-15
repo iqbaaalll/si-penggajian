@@ -24,15 +24,26 @@
                             Payroll Report
                             {{ \Carbon\Carbon::parse($payrollPeriod->payrollMonth)->format('F Y') }}
                         </h2>
-                        <a href={{ route('admin.payrollReport') }}
-                            class="flex font-medium text-gray-600 dark:text-gray-200 hover:text-red-800 hover:underline">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
-                            </svg>
-                            <span class="ml-2 text-sm">Back to Payroll Report</span>
-                        </a>
+                        <div class="inline-flex">
+                            <a href={{ route('admin.payrollReport') }}
+                                class="flex font-medium text-gray-600 dark:text-gray-200 hover:text-red-800 hover:underline">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+                                </svg>
+                                <span class="ml-2 mr-4 text-sm">Back to Payroll Report</span>
+                            </a>
+                            <a href="{{ route('admin.otherReport', ['id' => $payrollPeriod->id]) }}"
+                                class="flex font-medium text-gray-600 dark:text-gray-200 hover:text-red-800 hover:underline">
+                                <span class="mr-2 text-sm">View Other Report</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                     @include('layouts.payroll-table')
                 </div>

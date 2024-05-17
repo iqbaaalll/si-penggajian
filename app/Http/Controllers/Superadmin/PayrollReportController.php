@@ -11,6 +11,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PayrollsExport;
 use App\Exports\TaxReportExport;
 use App\Exports\TransferListsExport;
+use App\Models\Employee;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class PayrollReportController extends Controller
 {
@@ -26,7 +28,7 @@ class PayrollReportController extends Controller
 
         $payrolls = Payroll::with(['employee', 'payrollPeriod'])
             ->where('payrollPeriod_id', $id)
-            ->paginate(9);
+            ->paginate(7);
 
         return view('superadmin/payroll-report-detail', ['payrolls' => $payrolls, 'payrollPeriod' => $payrollPeriod]);
     }
@@ -107,5 +109,27 @@ class PayrollReportController extends Controller
         $payrollMonth = $payrollPeriod->payrollMonth;
 
         return Excel::download(new BpjsReportExport($payrollMonth), 'Data Potongan BPJS ' . \Carbon\Carbon::parse($payrollMonth)->format('F Y') . '.xlsx');
+    }
+
+    public function viewPayrollSlip($id)
+    {
+        $payrollSlip = Payroll::with(['employee', 'payrollPeriod'])
+            ->where('employee_id', $id)->get();
+
+        $pdf = PDF::loadView('superadmin.view-payrollslip', array('payrollSlip' =>  $payrollSlip))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('Slip_Gaji.pdf');
+    }
+
+    public function downloadPayrollSlip($id)
+    {
+        $payrollSlip = Payroll::with(['employee', 'payrollPeriod'])
+            ->where('employee_id', $id)->get();
+
+        $pdf = PDF::loadView('superadmin.view-payrollslip', array('payrollSlip' =>  $payrollSlip))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('Slip Gaji.pdf');
     }
 }

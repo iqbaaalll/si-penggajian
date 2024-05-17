@@ -43,6 +43,8 @@ class UserManagementController extends Controller
 
         event(new Registered($user));
 
+        session()->flash('success', 'New user added successfully.');
+
         if (Auth::user()->role == 'superadmin') {
             return redirect()->route('superadmin.userManagement');
         }

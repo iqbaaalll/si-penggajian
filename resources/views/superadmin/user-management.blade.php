@@ -18,6 +18,15 @@
         <div class="flex flex-col flex-1 w-full">
             @include('layouts.headbar')
             <main class="h-full overflow-y-auto">
+                <!-- Alert -->
+                @if (session('success'))
+                    <div id="alert-success"
+                        class="items-center justify-center fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg transition-opacity duration-300 z-50"
+                        role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
                 <div class="container px-6 mx-auto grid">
                     <div class="container mx-auto flex justify-between items-center">
                         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -99,8 +108,9 @@
                 <p class="mb-4 text-lg font-semibold text-gray-700 dark:text-gray-300">
                     Add New User
                 </p>
+
                 <!-- Modal form -->
-                <form method="POST" action="{{ route('superadmin.addUser') }}">
+                <form id="addUserForm" method="POST" action="{{ route('superadmin.addUser') }}">
                     @csrf
                     <label class="block text-sm" for="name">
                         <span class="text-gray-700 font-medium dark:text-gray-400">Name</span>
@@ -147,7 +157,7 @@
 
                     <footer
                         class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
-                        <button @click="closeModal"
+                        <button @click="closeModal" type="button" id="cancelButton"
                             class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                             Cancel
                         </button>
@@ -160,6 +170,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var cancelButton = document.getElementById('cancelButton');
+            var form = document.getElementById('addUserForm');
+            var alertSuccess = document.getElementById('alert-success');
+
+            if (alertSuccess) {
+                setTimeout(function() {
+                    alertSuccess.classList.add('opacity-0');
+                    setTimeout(function() {
+                        alertSuccess.remove();
+                    }, 300);
+                }, 1500);
+            }
+
+            cancelButton.addEventListener('click', function() {
+                form.reset();
+                closeModal();
+            });
+        });
+    </script>
 </body>
 
 </html>

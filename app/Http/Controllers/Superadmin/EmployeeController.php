@@ -69,6 +69,8 @@ class EmployeeController extends Controller
         if (Auth::user()->role == 'superadmin') {
             return redirect()->route('superadmin.employee');
         }
+
+        session()->flash('success', 'New employee added successfully.');
     }
 
     public function deleteEmployee($id)

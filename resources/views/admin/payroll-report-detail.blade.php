@@ -45,7 +45,7 @@
                             </a>
                         </div>
                     </div>
-                    @include('layouts.payroll-table')
+                    @include('layouts.payroll-table-admin')
                 </div>
             </main>
         </div>

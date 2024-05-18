@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
+use App\Models\Employee;
 
 class UserManagementController extends Controller
 {
@@ -34,11 +35,14 @@ class UserManagementController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $employee = Employee::where('name', $request->name)->first();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
             'password' => Hash::make($request->password),
+            'employee_id' => $employee ? $employee->id : null,
         ]);
 
         event(new Registered($user));

@@ -24,12 +24,22 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-// USER ROUTES
+/// USER ROUTES ///
 Route::prefix('user')->middleware(['auth', 'userMiddleware', 'preventBackAfterLogout'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+
+    Route::prefix('payslip')->group(function () {
+        Route::get('', [UserController::class, 'payslipIndex'])->name('user.payslip');
+        Route::get('/pdf/{id}', [UserController::class, 'viewPayslip'])->name('user.viewPayslip');
+        Route::get('/pdf-download/{id}', [UserController::class, 'downloadPayslip'])->name('user.downloadPayslip');
+    });
+
+    Route::prefix('payroll-history')->group(function () {
+        Route::get('', [UserController::class, 'payrollHistoryIndex'])->name('user.payrollHistory');
+    });
 });
 
-// ADMIN ROUTES
+/// ADMIN ROUTES //
 Route::prefix('admin')->middleware(['auth', 'adminMiddleware', 'preventBackAfterLogout'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
@@ -50,7 +60,7 @@ Route::prefix('admin')->middleware(['auth', 'adminMiddleware', 'preventBackAfter
     });
 });
 
-// SUPERADMIN ROUTES
+/// SUPERADMIN ROUTES ///
 Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preventBackAfterLogout'])->group(function () {
     Route::get('/dashboard', [SuperadminController::class, 'index'])->name('superadmin.dashboard');
 
@@ -63,12 +73,6 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('/edit-employee/{id}', [EmployeeController::class, 'editEmployeeIndex'])->name('superadmin.editEmployee');
         Route::put('/edit-employee/{id}', [EmployeeController::class, 'editEmployee'])->name('superadmin.updateEmployee');
         Route::get('/export/employee', [EmployeeController::class, 'exportEmployee'])->name('superadmin.exportEmployee');
-    });
-
-    Route::prefix('user-management')->group(function () {
-        Route::get('', [UserManagementController::class, 'userManagementIndex'])->name('superadmin.userManagement');
-        Route::post('/add-user', [UserManagementController::class, 'storeUser'])->name('superadmin.addUser');
-        Route::delete('/delete-user/{id}', [UserManagementController::class, 'deleteUser'])->name('superadmin.userDelete');
     });
 
     Route::prefix('payroll')->group(function () {
@@ -87,5 +91,11 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('/report-details/other-report/export/transfer/{id}', [PayrollReportController::class, 'exportTransferlist'])->name('superadmin.exportTransferList');
         Route::get('/report-details/other-report/export/tax/{id}', [PayrollReportController::class, 'exportTaxReport'])->name('superadmin.exportTaxReport');
         Route::get('/report-details/other-report/export/bpjs/{id}', [PayrollReportController::class, 'exportBpjsReport'])->name('superadmin.exportBpjsReport');
+    });
+
+    Route::prefix('user-management')->group(function () {
+        Route::get('', [UserManagementController::class, 'userManagementIndex'])->name('superadmin.userManagement');
+        Route::post('/add-user', [UserManagementController::class, 'storeUser'])->name('superadmin.addUser');
+        Route::delete('/delete-user/{id}', [UserManagementController::class, 'deleteUser'])->name('superadmin.userDelete');
     });
 });

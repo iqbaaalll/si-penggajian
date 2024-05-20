@@ -66,4 +66,19 @@ class UserController extends Controller
         $payrollPeriod = PayrollPeriod::all();
         return view('user/payroll-history', ['payrollPeriod' => $payrollPeriod]);
     }
+
+    public function payrollHistoryDetail($id)
+    {
+        $user = Auth::user();
+        $employeeId = $user->employee_id;
+
+        $payrollHistory = Payroll::with(['employee', 'payrollPeriod'])
+            ->where('employee_id', $employeeId)
+            ->whereHas('payrollPeriod', function ($query) use ($id) {
+                $query->where('payrollPeriod_id', $id);
+            })
+            ->get();
+
+        return view('user/payroll-history-detail', ['payrollHistory' => $payrollHistory]);
+    }
 }

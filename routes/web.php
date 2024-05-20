@@ -36,6 +36,7 @@ Route::prefix('user')->middleware(['auth', 'userMiddleware', 'preventBackAfterLo
 
     Route::prefix('payroll-history')->group(function () {
         Route::get('', [UserController::class, 'payrollHistoryIndex'])->name('user.payrollHistory');
+        Route::get('/history-detail/{id}', [UserController::class, 'payrollHistoryDetail'])->name('user.payrollHistoryDetail');
     });
 });
 

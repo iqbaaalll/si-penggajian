@@ -44,8 +44,9 @@
                                             <td class="px-4 py-3 text-sm">
                                                 {{ \Carbon\Carbon::parse($period->payrollSchedule)->format('d F Y') }}
                                             </td>
-                                            <td class="px-4 py-3">
-                                                <a class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400"
+                                            <td class="px-6 py-3">
+                                                <a href={{ route('user.payrollHistoryDetail', ['id' => $period->id]) }}
+                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400"
                                                     aria-label="View">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                         fill="currentColor" class="w-5 h-5">

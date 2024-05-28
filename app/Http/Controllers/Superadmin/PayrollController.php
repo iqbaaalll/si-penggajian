@@ -309,4 +309,41 @@ class PayrollController extends Controller
             return back()->with('error', 'Failed to run payroll');
         }
     }
+
+    public function editPayrollIndex($id) {
+        $payroll = Payroll::with('employee', 'payrollPeriod')
+            ->where('employee_id', $id)->first();
+
+        return view('superadmin/edit-payroll', compact('payroll'));
+    }
+
+    public function editPayroll(Request $request, $id)
+    {
+        $payroll = Payroll::with('employee')
+            ->where('employee_id', $id)->first();
+
+        $request->validate([
+            'pensionAmount' => 'required|integer|min:0',
+            'debtAmount' => 'required|integer|min:0'
+        ]);
+
+        $pensionAmount = $request->pensionAmount;
+        $debtAmount = $request->debtAmount;
+
+        $basicSalary = $payroll->basicSalary;
+        $bonus = $payroll->bonus;
+        $thr = $payroll->thr;
+        $taxAmount = $payroll->taxAmount;
+        $bpjsKesAmount = $payroll->bpjsKesAmount;
+        $bpjsTkAmount = $payroll->bpjsTkAmount;
+        $netSalaryNow = ($basicSalary + $bonus + $thr) - $taxAmount - $bpjsKesAmount - $bpjsTkAmount - $pensionAmount - $debtAmount;
+
+        $payroll->update([
+            'pensionAmount' => $pensionAmount,
+            'debtAmount' => $debtAmount,
+            'netSalary' => $netSalaryNow
+        ]);
+
+        return redirect()->back()->with('success', 'Payroll updated successfully');
+    }
 }

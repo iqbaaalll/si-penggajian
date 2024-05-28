@@ -34,7 +34,6 @@
                             <span class="ml-2 text-sm">Back to Payroll Period</span>
                         </a>
                     </div>
-                    <!-- Employee Table -->
                     @include('layouts.payroll-table')
                 </div>
             </main>

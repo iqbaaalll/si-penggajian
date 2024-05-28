@@ -10,20 +10,15 @@
         const payrollMonth = document.getElementById('payrollMonth');
         const payrollSchedule = document.getElementById('payrollSchedule');
 
-        // Fungsi untuk mengatur nilai default pada input payrollSchedule
         function setPayrollScheduleValue() {
             const selectedYearMonth = payrollMonth.value.split('-');
             const year = selectedYearMonth[0];
             const month = selectedYearMonth[1];
-
-            // Mengatur nilai default pada input payrollSchedule
             payrollSchedule.value = `${year}-${month}-25`;
         }
 
-        // Panggil fungsi setPayrollScheduleValue saat halaman dimuat
         setPayrollScheduleValue();
 
-        // Tambahkan event listener untuk mengubah nilai payrollSchedule saat payrollMonth diubah
         payrollMonth.addEventListener('change', setPayrollScheduleValue);
     });
 </script>

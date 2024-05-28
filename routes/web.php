@@ -80,6 +80,8 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('', [PayrollController::class, 'payrollIndex'])->name('superadmin.payroll');
         Route::post('/run-payroll', [PayrollController::class, 'runPayroll'])->name('superadmin.runPayroll');
         Route::get('/payroll-details/{id}', [PayrollController::class, 'payrollDetailIndex'])->name('superadmin.payrollDetails');
+        Route::get('/edit-payroll/{id}', [PayrollController::class, 'editPayrollIndex'])->name('superadmin.editPayroll');
+        Route::put('/edit-payroll/{id}', [PayrollController::class, 'editPayroll'])->name('superadmin.updatePayroll');
     });
 
     Route::prefix('report-payroll')->group(function () {

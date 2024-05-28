@@ -212,13 +212,13 @@
                             <tr>
                                 <td>
                                     Mengetahui<br />
-                                    Manager HRD<br /><br /><br />
+                                    Manager HRD<br /><br /><br /><br />
                                     Chuswatin
                                 </td>
 
                                 <td>
                                     Jakarta, {{ \Carbon\Carbon::now()->isoFormat('D MMMM YYYY') }}<br />
-                                    Penerima<br /><br /><br />
+                                    Penerima<br /><br /><br /><br />
                                     {{ $slip->employee->name }}
                                 </td>
                             </tr>

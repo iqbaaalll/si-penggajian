@@ -19,6 +19,7 @@ class Payroll extends Model
         'bpjsKesAmount',
         'bpjsTkAmount',
         'pensionAmount',
+        'debtAmount',
         'netSalary',
         'payrollPeriod_id',
         'employee_id'

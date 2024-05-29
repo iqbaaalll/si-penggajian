@@ -89,6 +89,7 @@ Route::prefix('superadmin')->middleware(['auth', 'superadminMiddleware', 'preven
         Route::get('/report-details/{id}', [PayrollReportController::class, 'payrollReportDetailIndex'])->name('superadmin.payrollReportDetails');
         Route::get('/report-details/pdf/{id}', [PayrollReportController::class, 'viewPayrollSlip'])->name('superadmin.viewPayrollSlip');
         Route::get('/report-details/pdf-download/{id}', [PayrollReportController::class, 'downloadPayrollSlip'])->name('superadmin.downloadPayrollSlip');
+        Route::post('/report-details/pdf-sent/{id}', [PayrollReportController::class, 'sendPayrollSlip'])->name('superadmin.sendPayrollSlip');
         Route::get('/export/payroll/{id}', [PayrollReportController::class, 'exportPayroll'])->name('superadmin.exportPayroll');
         Route::get('/report-details/other-report/{id}', [PayrollReportController::class, 'otherReportIndex'])->name('superadmin.otherReport');
         Route::get('/report-details/other-report/export/transfer/{id}', [PayrollReportController::class, 'exportTransferlist'])->name('superadmin.exportTransferList');

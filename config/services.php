@@ -31,4 +31,8 @@ return [
         ],
     ],
 
+    'wablas' => [
+        'token' => env('WABLAS_API_TOKEN'),
+    ]
+
 ];

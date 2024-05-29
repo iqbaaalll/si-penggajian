@@ -132,4 +132,59 @@ class PayrollReportController extends Controller
 
         return $pdf->download('Slip Gaji.pdf');
     }
+
+    public function sendPayrollSlip($id)
+    {
+        $payrollSlip = Payroll::with(['employee', 'payrollPeriod'])
+            ->where('employee_id', $id)->first();
+
+        $phoneNumber = $this->formatPhoneNumber($payrollSlip->employee->phoneNumber);
+
+        $pdf = PDF::loadView('superadmin.send-payrollslip', ['payrollSlip' => $payrollSlip])
+            ->setPaper('a4', 'portrait');
+
+        $filePath = storage_path('app/public/Slip_Gaji.pdf');
+        $pdf->save($filePath);
+
+        $this->sendPdfToWablas($filePath, $phoneNumber);
+
+        unlink($filePath);
+
+        return redirect()->back()->with('success', 'Payslip successfully sent');
+    }
+
+    protected function formatPhoneNumber($phoneNumber)
+    {
+        if (strpos($phoneNumber, '0') === 0) {
+            return '62' . substr($phoneNumber, 1);
+        }
+        return $phoneNumber;
+    }
+
+    protected function sendPdfToWablas($filePath, $phone)
+    {
+        $client = new \GuzzleHttp\Client();
+        $token = config('services.wablas.token');
+
+        $fileContent = base64_encode(file_get_contents($filePath));
+
+        $response = $client->post('https://jkt.wablas.com/api/send-document-from-local', [
+            'headers' => [
+                'Authorization' => $token,
+            ],
+            'form_params' => [
+                'phone' => $phone,
+                'file' => $fileContent,
+                'data' => json_encode(['name' => 'Slip_Gaji.pdf'])
+            ],
+        ]);
+
+        $result = json_decode($response->getBody(), true);
+
+        if (isset($result['status']) && $result['status'] === 'success') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

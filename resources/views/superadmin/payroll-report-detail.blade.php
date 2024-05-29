@@ -18,6 +18,15 @@
         <div class="flex flex-col flex-1 w-full">
             @include('layouts.headbar')
             <main class="h-full overflow-y-auto">
+                <!-- Alert -->
+                @if (session('success'))
+                    <div id="alert-success"
+                        class="items-center justify-center fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg transition-opacity duration-300 z-50"
+                        role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
                 <div class="container px-6 mx-auto grid">
                     <div class="container mx-auto flex justify-between items-center">
                         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -50,6 +59,20 @@
             </main>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var alertSuccess = document.getElementById('alert-success');
+
+            if (alertSuccess) {
+                setTimeout(function() {
+                    alertSuccess.classList.add('opacity-0');
+                    setTimeout(function() {
+                        alertSuccess.remove();
+                    }, 300);
+                }, 2500);
+            }
+        });
+    </script>
 </body>
 
 </html>

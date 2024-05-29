@@ -41,7 +41,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">Password</span>
                                 <input
                                     class="block w-full mt-2 px-3 text-sm py-2 rounded-md dark:bg-gray-700 focus:border-gray-400 focus:outline-none focus:shadow-outline-gray dark:text-gray-300 form-input"
-                                    id="password" type="password" name="password" placeholder="Enter your password"/>
+                                    id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password"/>
                                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                             </label>
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\PayrollPeriod;
 use App\Models\Payroll;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Crypt;
 
 class PayrollController extends Controller
 {
@@ -19,10 +20,12 @@ class PayrollController extends Controller
 
     public function payrollDetailIndex($id)
     {
-        $payrollPeriod = PayrollPeriod::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $payrollPeriod = PayrollPeriod::find($decryptId);
 
         $payrolls = Payroll::with(['employee', 'payrollPeriod'])
-            ->where('payrollPeriod_id', $id)
+            ->where('payrollPeriod_id', $decryptId)
             ->paginate(9);
 
         return view('superadmin/payroll-detail', ['payrolls' => $payrolls, 'payrollPeriod' => $payrollPeriod]);
@@ -310,11 +313,16 @@ class PayrollController extends Controller
         }
     }
 
-    public function editPayrollIndex($id) {
-        $payroll = Payroll::with('employee', 'payrollPeriod')
-            ->where('employee_id', $id)->first();
+    public function editPayrollIndex($id)
+    {
+        $decryptId = Crypt::decryptString($id);
 
-        return view('superadmin/edit-payroll', compact('payroll'));
+        $payroll = Payroll::with('employee', 'payrollPeriod')
+            ->where('employee_id', $decryptId)->first();
+
+        $encryptedPayrollPeriodId = Crypt::encryptString($payroll->payrollPeriod->id);
+
+        return view('superadmin/edit-payroll', compact('payroll', 'encryptedPayrollPeriodId'));
     }
 
     public function editPayroll(Request $request, $id)
@@ -344,6 +352,9 @@ class PayrollController extends Controller
             'netSalary' => $netSalaryNow
         ]);
 
-        return redirect()->back()->with('success', 'Payroll updated successfully');
+        $encryptedId = Crypt::encryptString($payroll->payrollPeriod_id);
+
+        return redirect()->route('superadmin.payrollDetails', ['id' => $encryptedId])
+            ->with('success', 'Payroll updated successfully');
     }
 }

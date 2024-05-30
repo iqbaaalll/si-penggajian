@@ -105,8 +105,11 @@
             <!-- Modal body -->
             <div class="mt-4 mb-6">
                 <!-- Modal title -->
-                <p class="mb-4 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                    Add New User
+                <h4 class="mt-4 mb-2 text-xl font-semibold text-gray-800 dark:text-gray-300 text-center">
+                    Add New Users
+                </h4>
+                <p class="mb-4 text-sm font-medium text-gray-600 dark:text-gray-300 text-center">
+                    Register new users according to their roles.
                 </p>
 
                 <!-- Modal form -->

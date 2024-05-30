@@ -23,7 +23,7 @@
                         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                             Edit Employee Data
                         </h2>
-                        <a href="{{ route('superadmin.viewEmployee', ['id' => $employee->id]) }}"
+                        <a href="{{ route('superadmin.viewEmployee', ['id' => Crypt::encryptString($employee->id)]) }}"
                             class="flex font-medium text-gray-600 dark:text-gray-200 hover:text-red-800 hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -34,7 +34,7 @@
                         </a>
                     </div>
                     <!-- Employee Information -->
-                    <form method="POST" action="{{ route('superadmin.updateEmployee', $employee->id) }}">
+                    <form method="POST" action="{{ route('superadmin.updateEmployee', Crypt::encryptString($employee->id)) }}">
                         @csrf
                         @method('PUT')
                         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">

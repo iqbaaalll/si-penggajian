@@ -13,6 +13,7 @@ use App\Exports\TaxReportExport;
 use App\Exports\TransferListsExport;
 use App\Models\Employee;
 use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\Crypt;
 
 class PayrollReportController extends Controller
 {
@@ -24,10 +25,12 @@ class PayrollReportController extends Controller
 
     public function payrollReportDetailIndex($id)
     {
-        $payrollPeriod = PayrollPeriod::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $payrollPeriod = PayrollPeriod::find($decryptId);
 
         $payrolls = Payroll::with(['employee', 'payrollPeriod'])
-            ->where('payrollPeriod_id', $id)
+            ->where('payrollPeriod_id', $decryptId)
             ->paginate(7);
 
         return view('superadmin/payroll-report-detail', ['payrolls' => $payrolls, 'payrollPeriod' => $payrollPeriod]);
@@ -50,16 +53,19 @@ class PayrollReportController extends Controller
 
     public function otherReportIndex($id)
     {
-        $payrollPeriod = PayrollPeriod::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $payrollPeriod = PayrollPeriod::find($decryptId);
 
         $payrolls = Payroll::with(['employee', 'payrollPeriod'])
-            ->where('payrollPeriod_id', $id)->get();
+            ->where('payrollPeriod_id', $decryptId)->get();
 
         $totalNetSalary = $payrolls->sum('netSalary');
         $totalTaxDeduction = $payrolls->sum('taxAmount');
         $totalBpjsKes = $payrolls->sum('bpjsKesAmount');
         $totalBpjsTk = $payrolls->sum('bpjsTkAmount');
         $totalPensionDeduction = $payrolls->sum('pensionAmount');
+        $encryptedPayrollPeriodId = Crypt::encryptString($payrollPeriod->id);
 
         return view('superadmin/other-report', [
             'payrolls' => $payrolls,
@@ -68,7 +74,8 @@ class PayrollReportController extends Controller
             'totalTaxDeduction' => $totalTaxDeduction,
             'totalBpjsKes' => $totalBpjsKes,
             'totalBpjsTk' => $totalBpjsTk,
-            'totalPensionDeduction' => $totalPensionDeduction
+            'totalPensionDeduction' => $totalPensionDeduction,
+            'encryptedPayrollPeriodId' => $encryptedPayrollPeriodId
         ]);
     }
 

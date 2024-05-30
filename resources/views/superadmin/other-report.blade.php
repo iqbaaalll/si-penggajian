@@ -24,14 +24,14 @@
                             Other Report
                             {{ \Carbon\Carbon::parse($payrollPeriod->payrollMonth)->format('F Y') }}
                         </h2>
-                        <a href={{ route('superadmin.payrollReport') }}
+                        <a href={{ route('superadmin.payrollReportDetails', ['id' => $encryptedPayrollPeriodId]) }}
                             class="flex font-medium text-gray-600 dark:text-gray-200 hover:text-red-800 hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
                             </svg>
-                            <span class="ml-2 mr-4 text-sm">Back to Payroll Report</span>
+                            <span class="ml-2 mr-4 text-sm">Back to Payroll Report Detail</span>
                         </a>
                     </div>
                     <div class="inline-flex mb-4">

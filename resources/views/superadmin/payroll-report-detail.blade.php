@@ -43,7 +43,7 @@
                                 </svg>
                                 <span class="ml-2 mr-4 text-sm">Back to Payroll Report</span>
                             </a>
-                            <a href="{{ route('superadmin.otherReport', ['id' => $payrollPeriod->id]) }}"
+                            <a href="{{ route('superadmin.otherReport', ['id' => Crypt::encryptString($payrollPeriod->id)]) }}"
                                 class="flex font-medium text-gray-600 dark:text-gray-200 hover:text-red-800 hover:underline">
                                 <span class="mr-2 text-sm">View Other Report</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

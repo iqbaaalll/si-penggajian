@@ -68,7 +68,7 @@
                         </td>
                         <td
                             class="{{ request()->is('superadmin/report-payroll/report-details/*') ? 'hidden' : '' }} px-6 py-3 text-sm">
-                            <a href="{{ route('superadmin.editPayroll', ['id' => $payroll->employee->id]) }}"
+                            <a href="{{ route('superadmin.editPayroll', ['id' => Crypt::encryptString($payroll->employee->id)]) }}"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400"
                                 aria-label="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

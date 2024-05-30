@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -73,7 +74,9 @@ class EmployeeController extends Controller
 
     public function deleteEmployee($id)
     {
-        $employee = Employee::findOrFail($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $employee = Employee::findOrFail($decryptId);
         $employee->delete();
 
         return redirect()->back()->with('success', 'Employee has been deleted.');
@@ -81,7 +84,9 @@ class EmployeeController extends Controller
 
     public function viewEmployee($id)
     {
-        $employee = Employee::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $employee = Employee::find($decryptId);
 
         if (!$employee) {
             abort(404);
@@ -92,7 +97,9 @@ class EmployeeController extends Controller
 
     public function editEmployeeIndex($id)
     {
-        $employee = Employee::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $employee = Employee::find($decryptId);
 
         if (!$employee) {
             abort(404);
@@ -103,7 +110,9 @@ class EmployeeController extends Controller
 
     public function editEmployee(Request $request, $id)
     {
-        $employee = Employee::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $employee = Employee::find($decryptId);
 
         if (!$employee) {
             abort(404);

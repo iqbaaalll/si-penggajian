@@ -40,7 +40,7 @@
                         </td>
                         <td class="px-3 py-3">
                             <div class="flex items-center space-x-2 text-sm">
-                                <a href="{{ route('superadmin.viewEmployee', ['id' => $employee->id]) }}"
+                                <a href="{{ route('superadmin.viewEmployee', ['id' => Crypt::encryptString($employee->id)]) }}"
                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                     aria-label="View">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -51,7 +51,7 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </a>
-                                <form method="POST" action="{{ route('superadmin.employeeDelete', $employee->id) }}"
+                                <form method="POST" action="{{ route('superadmin.employeeDelete', Crypt::encryptString($employee->id)) }}"
                                     onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                     @csrf
                                     @method('DELETE')

@@ -10,6 +10,7 @@ use App\Models\PayrollPeriod;
 use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Payroll;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -84,11 +85,11 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $employeeId = $user->employee_id;
-
+        $decryptId = Crypt::decryptString($id);
         $payrollHistory = Payroll::with(['employee', 'payrollPeriod'])
             ->where('employee_id', $employeeId)
-            ->whereHas('payrollPeriod', function ($query) use ($id) {
-                $query->where('payrollPeriod_id', $id);
+            ->whereHas('payrollPeriod', function ($query) use ($decryptId) {
+                $query->where('payrollPeriod_id', $decryptId);
             })
             ->get();
 

@@ -39,7 +39,7 @@
                             {{ \Carbon\Carbon::parse($employee->startWork)->format('d F Y') }}
                         </td>
                         <td class="px-6 py-3">
-                            <a href="{{ route('admin.viewEmployee', ['id' => $employee->id]) }}"
+                            <a href="{{ route('admin.viewEmployee', ['id' => Crypt::encryptString($employee->id)]) }}"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400"
                                 aria-label="View">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"

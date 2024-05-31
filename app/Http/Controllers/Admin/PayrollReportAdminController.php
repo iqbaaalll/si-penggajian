@@ -11,6 +11,7 @@ use App\Exports\PayrollsExport;
 use App\Exports\TransferListsExport;
 use App\Exports\TaxReportExport;
 use App\Exports\BpjsReportExport;
+use Illuminate\Support\Facades\Crypt;
 
 class PayrollReportAdminController extends Controller
 {
@@ -22,10 +23,12 @@ class PayrollReportAdminController extends Controller
 
     public function payrollReportDetailIndex($id)
     {
-        $payrollPeriod = PayrollPeriod::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $payrollPeriod = PayrollPeriod::find($decryptId);
 
         $payrolls = Payroll::with(['employee', 'payrollPeriod'])
-            ->where('payrollPeriod_id', $id)
+            ->where('payrollPeriod_id', $decryptId)
             ->paginate(9);
 
         return view('admin/payroll-report-detail', ['payrolls' => $payrolls, 'payrollPeriod' => $payrollPeriod]);
@@ -48,10 +51,12 @@ class PayrollReportAdminController extends Controller
 
     public function otherReportIndex($id)
     {
-        $payrollPeriod = PayrollPeriod::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $payrollPeriod = PayrollPeriod::find($decryptId);
 
         $payrolls = Payroll::with(['employee', 'payrollPeriod'])
-            ->where('payrollPeriod_id', $id)->get();
+            ->where('payrollPeriod_id', $decryptId)->get();
 
         $totalNetSalary = $payrolls->sum('netSalary');
         $totalTaxDeduction = $payrolls->sum('taxAmount');

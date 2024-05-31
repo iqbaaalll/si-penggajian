@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmployeesExport;
+use Illuminate\Support\Facades\Crypt;
 
 class EmployeeAdminController extends Controller
 {
@@ -18,7 +19,9 @@ class EmployeeAdminController extends Controller
 
     public function viewEmployee($id)
     {
-        $employee = Employee::find($id);
+        $decryptId = Crypt::decryptString($id);
+
+        $employee = Employee::find($decryptId);
 
         if (!$employee) {
             abort(404);

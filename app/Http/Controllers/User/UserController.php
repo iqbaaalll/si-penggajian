@@ -9,14 +9,27 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\PayrollPeriod;
 use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Payroll;
-use App\Models\Employee;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        return view('user/dashboard', compact('user'));
+        $employeeId = $user->employee_id;
+        $currentMonth = Carbon::now()->format('Y-m');
+        $payrolls = Payroll::with(['employee', 'payrollPeriod'])
+            ->where('employee_id', $employeeId)
+            ->whereHas('payrollPeriod', function ($query) use ($currentMonth) {
+                $query->where('payrollMonth', $currentMonth);
+            })
+            ->get();
+
+        $dateNow = Carbon::now()->format('F Y');
+        $netSalary = $payrolls->first()->netSalary;
+        $taxAmount = $payrolls->first()->taxAmount;
+        $debtAmount = $payrolls->first()->debtAmount;
+        return view('user/dashboard', compact('dateNow', 'netSalary', 'taxAmount', 'debtAmount', 'user'));
     }
 
     public function payslipIndex()

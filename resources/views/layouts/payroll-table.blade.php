@@ -4,7 +4,7 @@
             <thead>
                 <tr
                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                    <th class="sticky-column px-4 py-3">Name</th>
+                    <th class="sticky-column px-4 py-3 dark:bg-gray-800 bg-white">Name</th>
                     <th class="px-4 py-3">Tax Status</th>
                     <th class="px-4 py-3">Salary per Month</th>
                     <th class="px-4 py-3">Bonus</th>
@@ -26,7 +26,7 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @foreach ($payrolls as $payroll)
                     <tr class="text-gray-700 dark:text-gray-400">
-                        <td class="sticky-column px-4 py-3 text-sm">
+                        <td class="sticky-column px-4 py-3 text-sm dark:bg-gray-800 bg-white">
                             {{ $payroll->employee->name }}
                         </td>
                         <td class="px-4 py-3 text-xs">
@@ -181,15 +181,6 @@
         position: -webkit-sticky;
         position: sticky;
         left: 0;
-        background-color: inherit;
         z-index: 1;
-    }
-
-    thead .sticky-column {
-        background-color: #f9fafb;
-    }
-
-    tbody .sticky-column {
-        background-color: #fff;
     }
 </style>
